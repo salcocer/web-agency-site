@@ -8,51 +8,41 @@
 <meta name="description" content="A small web design studio on Koh Samui and in Bangkok. Websites for villas, resorts, clinics and independent brands.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Archivo:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: one calm column of full-width bands, like walking through rooms of a studio in late-afternoon light. */
+/* Layout: neo-brutalist stack of hard-edged blocks. Thick ink outlines, offset shadows, flat tropical colour.
+   Deliberately one look in every theme, so all colours are set explicitly. */
 :root {
-  --linen: #f3efe8;      /* page ground */
-  --stone: #e4ddd2;      /* quiet bands */
-  --ink: #23221f;        /* text */
-  --muted: #6d675d;      /* secondary text */
-  --line: #cfc6b8;       /* hairlines */
-  --sun: #b08a57;        /* the one accent: brass at golden hour */
-  --shade: #2c2a26;      /* dark band */
-  --on-shade: #efe9df;
-  --light-a: #efe2cc;    /* light-wash gradients in image panels */
-  --light-b: #d7c7ae;
-  --light-c: #b9a68a;
-  --display: "Cormorant", "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --body: "Jost", "Helvetica Neue", Arial, sans-serif;
-  --wrap: 1180px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --linen: #1b1a17; --stone: #24221e; --ink: #ece6dc; --muted: #a59d90; --line: #3d3a34;
-    --sun: #c9a46f; --shade: #121110; --on-shade: #ece6dc;
-    --light-a: #3a3328; --light-b: #2c271f; --light-c: #4a3f30;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --linen: #1b1a17; --stone: #24221e; --ink: #ece6dc; --muted: #a59d90; --line: #3d3a34;
-  --sun: #c9a46f; --shade: #121110; --on-shade: #ece6dc;
-  --light-a: #3a3328; --light-b: #2c271f; --light-c: #4a3f30;
-  color-scheme: dark;
+  --paper: #f1eeff;    /* lilac page ground */
+  --ink: #111111;      /* outlines, text, shadows */
+  --mango: #ffc23d;    /* primary accent */
+  --lagoon: #4cc9f0;   /* cool accent */
+  --hibiscus: #ff5d73; /* hot accent */
+  --lime: #b8f35a;     /* fresh accent */
+  --white: #ffffff;
+  --display: "Unbounded", "Arial Black", Impact, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --bw: 3px;
+  --shadow: 6px 6px 0 var(--ink);
+  --shadow-sm: 4px 4px 0 var(--ink);
+  --wrap: 1200px;
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before { transition: none !important; animation: none !important; } }
 body {
-  background: var(--linen); color: var(--ink);
-  font-family: var(--body); font-weight: 300; font-size: 17px; line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
+  background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  background-image: radial-gradient(var(--ink) 1px, transparent 1.2px);
+  background-size: 22px 22px; background-attachment: fixed;
+  background-color: var(--paper);
 }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--linen); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--mango); }
 a { color: inherit; }
-:focus-visible { outline: 1px solid var(--sun); outline-offset: 4px; }
+:focus-visible { outline: var(--bw) solid var(--hibiscus); outline-offset: 3px; }
 
 .wrap {
   max-width: var(--wrap); margin-inline: auto;
@@ -60,203 +50,203 @@ a { color: inherit; }
   padding-right: max(24px, env(safe-area-inset-right, 0px));
 }
 @media (max-width: 480px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
-.band { padding-block: clamp(72px, 11vw, 140px); }
-.band--stone { background: var(--stone); }
-.band--shade { background: var(--shade); color: var(--on-shade); }
+section { padding-block: clamp(56px, 8vw, 104px); }
+.band { border-block: var(--bw) solid var(--ink); }
+.band--ink { background: var(--ink); color: var(--white); }
+.band--mango { background: var(--mango); }
+.band--lagoon { background: var(--lagoon); }
 
-.eyebrow {
-  font-family: var(--body); font-size: 12px; font-weight: 400;
-  letter-spacing: .28em; text-transform: uppercase; color: var(--muted);
-}
-.band--shade .eyebrow { color: var(--sun); }
-h1, h2, h3 { font-family: var(--display); font-weight: 300; line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
-h1 { font-size: clamp(46px, 7.4vw, 104px); }
-h2 { font-size: clamp(36px, 4.6vw, 62px); }
-h3 { font-size: clamp(24px, 2.2vw, 30px); font-weight: 400; }
-em { font-style: italic; color: var(--sun); }
+h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.02; text-wrap: balance; letter-spacing: -.02em; }
+h1 { font-size: clamp(40px, 7vw, 92px); font-weight: 900; }
+h2 { font-size: clamp(32px, 4.6vw, 60px); font-weight: 900; }
+h3 { font-size: clamp(19px, 1.7vw, 23px); font-weight: 700; letter-spacing: -.01em; }
 p { margin: 0; max-width: 62ch; }
-.lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--muted); }
+.lede { font-size: clamp(18px, 1.5vw, 20px); font-weight: 500; }
+
+.tag {
+  display: inline-block; justify-self: start; align-self: start;
+  font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  background: var(--white); color: var(--ink); border: 2px solid var(--ink); padding: 4px 10px;
+}
+.tag--lime { background: var(--lime); }
+.tag--mango { background: var(--mango); }
+.tag--hib { background: var(--hibiscus); }
+.tag--lagoon { background: var(--lagoon); }
+
+/* the signature move: a word sitting in a tilted highlight box */
+.hl { display: inline-block; background: var(--hibiscus); border: var(--bw) solid var(--ink); box-shadow: var(--shadow-sm); padding: 0 .18em; transform: rotate(-2deg); }
+.hl--lime { background: var(--lime); }
+.hl--mango { background: var(--mango); }
+.band--ink .hl { color: var(--ink); box-shadow: 4px 4px 0 var(--white); border-color: var(--white); }
 
 .btn {
-  display: inline-flex; align-items: center; gap: 14px;
-  font-family: var(--body); font-size: 12px; font-weight: 400; letter-spacing: .26em; text-transform: uppercase;
-  text-decoration: none; color: var(--ink);
-  border: 1px solid var(--ink); padding: 16px 30px; background: transparent; cursor: pointer;
-  transition: background .35s ease, color .35s ease;
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--mono); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink); background: var(--mango);
+  border: var(--bw) solid var(--ink); box-shadow: var(--shadow); padding: 15px 24px; cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
 }
-.btn:hover { background: var(--ink); color: var(--linen); }
-.btn--light { color: var(--on-shade); border-color: var(--on-shade); }
-.btn--light:hover { background: var(--on-shade); color: var(--shade); }
-.link {
-  font-size: 12px; letter-spacing: .26em; text-transform: uppercase; text-decoration: none;
-  border-bottom: 1px solid var(--line); padding-bottom: 6px; transition: border-color .3s;
-}
-.link:hover { border-color: var(--sun); }
+.btn:hover { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--ink); }
+.btn:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--ink); }
+.btn--white { background: var(--white); }
+.btn--lime { background: var(--lime); }
+.band--ink .btn { box-shadow: 6px 6px 0 var(--white); border-color: var(--white); }
+.band--ink .btn:hover { box-shadow: 3px 3px 0 var(--white); }
+
+.card { background: var(--white); border: var(--bw) solid var(--ink); box-shadow: var(--shadow); }
 
 /* Header */
 header.top {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
-  background: color-mix(in srgb, var(--linen) 88%, transparent);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
+  background: var(--mango); border-bottom: var(--bw) solid var(--ink);
 }
-.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 20px; }
-.brand { font-family: var(--display); font-size: 26px; font-weight: 400; letter-spacing: .02em; text-decoration: none; white-space: nowrap; }
-.brand small { font-family: var(--body); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-left: 10px; }
-nav.menu { display: flex; gap: clamp(18px, 2.6vw, 38px); align-items: center; }
-nav.menu a { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; text-decoration: none; color: var(--muted); transition: color .3s; }
-nav.menu a:hover { color: var(--ink); }
-nav.menu a.cta { color: var(--ink); border: 1px solid var(--ink); padding: 10px 18px; }
-@media (max-width: 860px) { nav.menu a:not(.cta) { display: none; } .brand small { display: none; } }
-
-/* Light panels: CSS-only "photographs" of sun through a window */
-.light {
-  position: relative; overflow: hidden; max-width: 100%;
-  background:
-    radial-gradient(120% 90% at 78% 12%, color-mix(in srgb, var(--light-a) 100%, white 20%) 0%, transparent 58%),
-    linear-gradient(160deg, var(--light-a), var(--light-b) 55%, var(--light-c));
-}
-.light::after {
-  content: ""; position: absolute; inset: -20%;
-  background: repeating-linear-gradient(105deg, transparent 0 46px, color-mix(in srgb, var(--ink) 9%, transparent) 46px 58px, transparent 58px 150px);
-  transform: skewY(-6deg); filter: blur(6px); mix-blend-mode: multiply; opacity: .8;
-}
-.light .cap {
-  position: absolute; left: 20px; bottom: 16px; z-index: 1;
-  font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink); opacity: .7;
-}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.brand { font-family: var(--display); font-weight: 900; font-size: 22px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+.brand::before { content: ""; width: 22px; height: 22px; background: var(--hibiscus); border: var(--bw) solid var(--ink); border-radius: 50%; }
+nav.menu { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+nav.menu a { font-family: var(--mono); font-size: 13px; font-weight: 700; text-transform: uppercase; text-decoration: none; padding: 8px 12px; border: 2px solid transparent; }
+nav.menu a:hover { border-color: var(--ink); background: var(--white); }
+nav.menu a.cta { background: var(--ink); color: var(--mango); border: 2px solid var(--ink); margin-left: 8px; }
+nav.menu a.cta:hover { background: var(--white); color: var(--ink); }
+@media (max-width: 900px) { nav.menu a:not(.cta) { display: none; } }
 
 /* Hero */
-.hero { padding-block: clamp(56px, 9vw, 120px) clamp(64px, 9vw, 110px); }
-.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(32px, 6vw, 88px); align-items: end; }
-.hero-copy { display: grid; gap: 34px; min-width: 0; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 28px; align-items: center; }
-.hero .light { aspect-ratio: 4 / 5; }
-.hero-meta { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 30px; border-top: 1px solid var(--line); }
-.hero-meta div { display: grid; gap: 2px; }
-.hero-meta b { font-family: var(--display); font-size: 30px; font-weight: 400; }
-.hero-meta span { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
-@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero .light { aspect-ratio: 16 / 11; } }
+.hero .wrap { display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero-copy { display: grid; gap: 28px; min-width: 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 18px; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.stat { background: var(--white); border: var(--bw) solid var(--ink); box-shadow: var(--shadow-sm); padding: 12px 14px; display: grid; gap: 2px; }
+.stat b { font-family: var(--display); font-size: clamp(17px, 1.8vw, 22px); font-weight: 900; }
+.stat span { font-family: var(--mono); font-size: 11px; text-transform: uppercase; }
+.stat:nth-child(1) { background: var(--lime); }
+.stat:nth-child(2) { background: var(--lagoon); }
+.hero-art { position: relative; aspect-ratio: 4 / 5; max-width: 100%; background: var(--lagoon); border: var(--bw) solid var(--ink); box-shadow: 10px 10px 0 var(--ink); overflow: hidden; }
+.hero-art .sun { position: absolute; width: 46%; aspect-ratio: 1; right: 12%; top: 10%; border-radius: 50%; background: var(--mango); border: var(--bw) solid var(--ink); }
+.hero-art .sea { position: absolute; inset: 58% 0 0; background: repeating-linear-gradient(180deg, var(--white) 0 14px, var(--lagoon) 14px 28px); border-top: var(--bw) solid var(--ink); }
+.hero-art .win {
+  position: absolute; left: 8%; right: 8%; bottom: 8%; height: 34%;
+  background: var(--white); border: var(--bw) solid var(--ink); box-shadow: var(--shadow-sm);
+  display: grid; grid-template-rows: 26px 1fr;
+}
+.win i { border-bottom: var(--bw) solid var(--ink); background: var(--paper); display: flex; align-items: center; gap: 6px; padding-left: 10px; }
+.win i::before { content: ""; width: 44px; height: 10px; background: radial-gradient(circle, var(--ink) 4px, transparent 4.5px) 0 0 / 15px 10px repeat-x; }
+.win b { display: grid; place-content: center; font-family: var(--display); font-weight: 900; font-size: clamp(16px, 2vw, 24px); text-align: center; padding: 8px; }
+.sticker {
+  position: absolute; z-index: 2; left: -6px; top: 22px; transform: rotate(-8deg);
+  background: var(--hibiscus); border: var(--bw) solid var(--ink); padding: 8px 14px;
+  font-family: var(--mono); font-weight: 700; font-size: 13px; text-transform: uppercase; box-shadow: var(--shadow-sm);
+}
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } .hero-art { aspect-ratio: 5 / 4; } }
+@media (max-width: 520px) { .stats { grid-template-columns: 1fr; } }
 
-/* Intro statement */
-.statement .wrap { display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
-.statement p.big { font-family: var(--display); font-size: clamp(26px, 3.1vw, 42px); line-height: 1.32; font-weight: 300; max-width: 30ch; }
-@media (max-width: 760px) { .statement .wrap { grid-template-columns: 1fr; gap: 20px; } }
+/* Ticker */
+.ticker { background: var(--ink); color: var(--white); border-block: var(--bw) solid var(--ink); overflow: hidden; padding-block: 14px; }
+.ticker-track { display: flex; gap: 40px; width: max-content; animation: tick 30s linear infinite; font-family: var(--display); font-weight: 700; font-size: clamp(18px, 2.2vw, 26px); text-transform: uppercase; white-space: nowrap; }
+.ticker-track span::after { content: "✦"; color: var(--mango); margin-left: 40px; }
+@keyframes tick { to { transform: translateX(-50%); } }
 
 /* Section heads */
-.head { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: clamp(44px, 6vw, 80px); }
-.head > div { display: grid; gap: 18px; min-width: 0; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 28px; flex-wrap: wrap; margin-bottom: clamp(36px, 5vw, 60px); }
+.head > div { display: grid; gap: 16px; min-width: 0; }
+
+/* Statement */
+.statement .wrap { display: grid; gap: 22px; }
+.statement p.big { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 3vw, 38px); line-height: 1.25; max-width: 34ch; letter-spacing: -.01em; }
 
 /* Services */
-.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
-.service { padding: 40px 36px 44px 0; display: grid; gap: 14px; align-content: start; border-bottom: 1px solid var(--line); }
-.service:not(:nth-child(3n+1)) { padding-left: 36px; border-left: 1px solid var(--line); }
-.service .tag { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--sun); }
-.service p { color: var(--muted); font-size: 16px; }
-.service ul { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 6px; font-size: 14px; color: var(--muted); }
-.service li::before { content: "—  "; color: var(--line); }
-@media (max-width: 900px) {
-  .services { grid-template-columns: 1fr; }
-  .service, .service:not(:nth-child(3n+1)) { padding: 32px 0; border-left: 0; }
-}
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+.service { padding: 26px 24px 28px; display: grid; gap: 12px; align-content: start; transition: transform .15s ease, box-shadow .15s ease; }
+.service:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.service:nth-child(3n+1) .tag { background: var(--lime); }
+.service:nth-child(3n+2) .tag { background: var(--lagoon); }
+.service:nth-child(3n+3) .tag { background: var(--hibiscus); }
+.service ul { list-style: none; padding: 12px 0 0; margin: 4px 0 0; display: grid; gap: 6px; font-family: var(--mono); font-size: 13px; border-top: 2px dashed var(--ink); }
+.service li::before { content: "→ "; }
+@media (max-width: 960px) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .services { grid-template-columns: 1fr; } }
 
 /* Work */
-.work { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px) clamp(20px, 3vw, 40px); }
-.project { display: grid; gap: 18px; text-decoration: none; min-width: 0; }
-.project:nth-child(1) { grid-column: 1 / span 7; }
-.project:nth-child(2) { grid-column: 8 / span 5; align-self: end; }
-.project:nth-child(3) { grid-column: 1 / span 5; }
-.project:nth-child(4) { grid-column: 6 / span 7; }
-.project .light { aspect-ratio: 4 / 3; transition: transform .8s ease; }
-.project:nth-child(2) .light, .project:nth-child(3) .light { aspect-ratio: 4 / 5; }
-.project:hover .light { transform: scale(.985); }
-.project .row { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; flex-wrap: wrap; }
-.project .row span { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
-.project p { color: var(--muted); font-size: 15px; }
-.light.v2 { background: radial-gradient(90% 80% at 20% 20%, var(--light-a), transparent 60%), linear-gradient(200deg, var(--light-b), var(--light-c)); }
-.light.v3 { background: radial-gradient(100% 70% at 60% 0%, var(--light-a), transparent 65%), linear-gradient(180deg, var(--light-b), var(--light-c) 90%); }
-.light.v4 { background: radial-gradient(80% 90% at 90% 80%, var(--light-a), transparent 60%), linear-gradient(120deg, var(--light-c), var(--light-b)); }
-/* tiny browser frame inside the light, so the work reads as websites */
-.frame {
-  position: absolute; z-index: 1; left: 12%; right: 12%; top: 16%; bottom: 16%;
-  background: color-mix(in srgb, var(--linen) 82%, transparent);
-  box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent);
-  display: grid; grid-template-rows: 22px 1fr; overflow: hidden;
-}
-.frame i { display: flex; gap: 5px; align-items: center; padding-left: 10px; border-bottom: 1px solid var(--line); }
-.frame i::before { content: ""; width: 34px; height: 5px; background: radial-gradient(circle, var(--line) 2.5px, transparent 3px) 0 0 / 11px 5px repeat-x; }
-.frame b { display: grid; place-content: center; text-align: center; gap: 6px; font-family: var(--display); font-weight: 400; font-size: clamp(16px, 2vw, 26px); padding: 10px; }
-.frame b small { font-family: var(--body); font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
-.note { font-size: 13px; color: var(--muted); margin-top: 48px; }
-@media (max-width: 760px) {
-  .project:nth-child(n) { grid-column: 1 / -1; }
-  .project:nth-child(n) .light { aspect-ratio: 4 / 3; }
-}
+.work { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.project { display: grid; text-decoration: none; min-width: 0; transition: transform .15s ease, box-shadow .15s ease; }
+.project:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 var(--ink); }
+.shot { position: relative; aspect-ratio: 16 / 10; max-width: 100%; border-bottom: var(--bw) solid var(--ink); overflow: hidden; display: grid; place-items: center; }
+.shot .win { position: relative; left: auto; right: auto; bottom: auto; width: 76%; height: 66%; }
+.shot::before { content: ""; position: absolute; width: 38%; aspect-ratio: 1; border-radius: 50%; border: var(--bw) solid var(--ink); right: -6%; top: -14%; }
+.p1 .shot { background: var(--lagoon); } .p1 .shot::before { background: var(--mango); }
+.p2 .shot { background: var(--hibiscus); } .p2 .shot::before { background: var(--lime); }
+.p3 .shot { background: var(--mango); } .p3 .shot::before { background: var(--hibiscus); }
+.p4 .shot { background: var(--lime); } .p4 .shot::before { background: var(--lagoon); }
+.project .body { padding: 20px 22px 24px; display: grid; gap: 10px; }
+.project .row { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+.note { font-family: var(--mono); font-size: 13px; margin-top: 36px; }
+@media (max-width: 760px) { .work { grid-template-columns: 1fr; } }
 
 /* Process */
-.steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; counter-reset: s; }
-.step { padding: 0 24px 0 0; display: grid; gap: 12px; align-content: start; border-top: 1px solid color-mix(in srgb, var(--on-shade) 25%, transparent); padding-top: 28px; }
-.step .n { font-family: var(--display); font-size: 44px; font-weight: 300; color: var(--sun); line-height: 1; }
-.step p { font-size: 15px; color: color-mix(in srgb, var(--on-shade) 70%, transparent); }
-.step .wk { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: color-mix(in srgb, var(--on-shade) 55%, transparent); }
-@media (max-width: 960px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 24px; } }
-@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+.steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
+.step { background: var(--white); color: var(--ink); border: var(--bw) solid var(--white); box-shadow: 6px 6px 0 var(--mango); padding: 22px 18px; display: grid; gap: 10px; align-content: start; }
+.step .n { font-family: var(--display); font-size: 40px; font-weight: 900; line-height: 1; -webkit-text-stroke: 2px var(--ink); color: var(--mango); }
+.step p { font-size: 15px; }
+.step .tag { margin-top: 4px; }
+@media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 540px) { .steps { grid-template-columns: 1fr; } }
 
 /* Packages */
-.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.plan { border: 1px solid var(--line); padding: 40px 34px; display: grid; gap: 22px; align-content: start; background: var(--linen); }
-.plan.featured { border-color: var(--sun); }
-.plan .price { font-family: var(--display); font-size: 46px; font-weight: 300; line-height: 1; font-variant-numeric: tabular-nums; }
-.plan .price small { font-family: var(--body); font-size: 13px; color: var(--muted); letter-spacing: .04em; }
-.plan ul { list-style: none; padding: 22px 0 0; margin: 0; border-top: 1px solid var(--line); display: grid; gap: 10px; font-size: 15px; color: var(--muted); }
-.plan li::before { content: "·"; color: var(--sun); margin-right: 10px; }
-.plan .for { font-size: 15px; color: var(--muted); }
-@media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: start; }
+.plan { padding: 28px 26px 30px; display: grid; gap: 18px; align-content: start; position: relative; }
+.plan.featured { background: var(--lime); transform: rotate(-1deg); }
+.plan .price { font-family: var(--display); font-size: clamp(32px, 3.4vw, 44px); font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan .price small { display: block; font-family: var(--mono); font-size: 13px; font-weight: 500; margin-top: 8px; }
+.plan ul { list-style: none; padding: 16px 0 0; margin: 0; border-top: var(--bw) solid var(--ink); display: grid; gap: 8px; font-size: 15px; font-weight: 500; }
+.plan li::before { content: "✓"; display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 10px; border: 2px solid var(--ink); background: var(--mango); font-size: 12px; font-weight: 700; }
+.plan .pop { position: absolute; top: -16px; right: 18px; }
+@media (max-width: 900px) { .plans { grid-template-columns: 1fr; } .plan.featured { transform: none; } }
 
 /* About */
-.about .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(36px, 7vw, 100px); align-items: center; }
-.about .light { aspect-ratio: 1 / 1; }
-.about-copy { display: grid; gap: 26px; min-width: 0; }
-.values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 36px; padding-top: 10px; }
-.values div { display: grid; gap: 6px; }
-.values h3 { font-size: 24px; }
-.values p { font-size: 15px; color: var(--muted); }
-@media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } .about .light { aspect-ratio: 16 / 10; } }
+.about .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.about-art { aspect-ratio: 1; max-width: 100%; background: var(--hibiscus); border: var(--bw) solid var(--ink); box-shadow: 10px 10px 0 var(--ink); display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; overflow: hidden; }
+.about-art div { border: calc(var(--bw) / 2) solid var(--ink); display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: clamp(22px, 3vw, 38px); }
+.about-art div:nth-child(1) { background: var(--mango); }
+.about-art div:nth-child(2) { background: var(--white); }
+.about-art div:nth-child(3) { background: var(--lagoon); }
+.about-art div:nth-child(4) { background: var(--lime); }
+.about-copy { display: grid; gap: 24px; min-width: 0; }
+.values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.values div { background: var(--white); border: var(--bw) solid var(--ink); box-shadow: var(--shadow-sm); padding: 16px 18px; display: grid; gap: 6px; }
+.values p { font-size: 15px; }
+@media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } .about-art { aspect-ratio: 2 / 1; } }
 @media (max-width: 480px) { .values { grid-template-columns: 1fr; } }
 
 /* Contact */
-.contact .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 100px); }
-.contact-info { display: grid; gap: 30px; align-content: start; min-width: 0; }
-.contact-info dl { display: grid; gap: 18px; margin: 0; }
-.contact-info dt { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--sun); }
-.contact-info dd { margin: 2px 0 0; font-family: var(--display); font-size: 24px; user-select: all; }
-form { display: grid; gap: 26px; min-width: 0; }
+.contact .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+.contact-info { display: grid; gap: 24px; align-content: start; min-width: 0; }
+.contact-info dl { display: grid; gap: 14px; margin: 0; }
+.contact-info dl div { border: var(--bw) solid var(--white); padding: 12px 16px; }
+.contact-info dt { font-family: var(--mono); font-size: 12px; text-transform: uppercase; color: var(--mango); }
+.contact-info dd { margin: 4px 0 0; font-family: var(--display); font-weight: 700; font-size: clamp(16px, 1.6vw, 20px); user-select: all; overflow-wrap: anywhere; }
+form { display: grid; gap: 18px; min-width: 0; background: var(--white); color: var(--ink); border: var(--bw) solid var(--white); box-shadow: 10px 10px 0 var(--mango); padding: clamp(22px, 3vw, 34px); }
 .field { display: grid; gap: 6px; }
-label { font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: color-mix(in srgb, var(--on-shade) 65%, transparent); }
+label { font-family: var(--mono); font-size: 12px; font-weight: 700; text-transform: uppercase; }
 input, select, textarea {
-  font: inherit; font-size: 17px; color: var(--on-shade); background: transparent;
-  border: 0; border-bottom: 1px solid color-mix(in srgb, var(--on-shade) 30%, transparent);
-  padding: 10px 0; border-radius: 0; width: 100%;
+  font: inherit; font-size: 16px; color: var(--ink); background: var(--paper);
+  border: var(--bw) solid var(--ink); border-radius: 0; padding: 12px 14px; width: 100%;
 }
-select option { color: #23221f; }
-textarea { resize: vertical; min-height: 96px; }
-input:focus, select:focus, textarea:focus { outline: none; border-bottom-color: var(--sun); }
-.sent { font-size: 15px; color: var(--sun); }
+textarea { resize: vertical; min-height: 110px; }
+input:focus, select:focus, textarea:focus { outline: none; background: var(--white); box-shadow: var(--shadow-sm); }
+.sent { font-family: var(--mono); font-size: 14px; font-weight: 700; background: var(--lime); border: 2px solid var(--ink); padding: 10px 12px; }
 @media (max-width: 860px) { .contact .wrap { grid-template-columns: 1fr; } }
 
-footer { background: var(--shade); color: color-mix(in srgb, var(--on-shade) 60%, transparent); border-top: 1px solid color-mix(in srgb, var(--on-shade) 12%, transparent); }
-footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-block: 34px; font-size: 13px; }
-footer .brand { color: var(--on-shade); font-size: 22px; }
-footer nav { display: flex; gap: 26px; flex-wrap: wrap; }
+footer { background: var(--mango); border-top: var(--bw) solid var(--ink); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding-block: 26px; font-family: var(--mono); font-size: 13px; font-weight: 500; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 footer a { text-decoration: none; }
-footer a:hover { color: var(--on-shade); }
+footer a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top">Saltlight<small>Web Studio</small></a>
+    <a class="brand" href="#top">Saltlight</a>
     <nav class="menu" aria-label="Main">
       <a href="#services">Services</a>
       <a href="#work">Work</a>
@@ -272,71 +262,83 @@ footer a:hover { color: var(--on-shade); }
   <section class="hero">
     <div class="wrap">
       <div class="hero-copy">
-        <span class="eyebrow">Web design studio · Koh Samui &amp; Bangkok</span>
-        <h1>Websites made with <em>light</em>, space and intention.</h1>
-        <p class="lede">We design and build quiet, beautiful websites for villas, resorts, wellness brands and independent businesses in Thailand. Fast to load, easy to find on Google, and simple for you to update.</p>
+        <span class="tag tag--lime">Web design studio · Koh Samui &amp; Bangkok</span>
+        <h1>Websites that get you <span class="hl">booked</span>.</h1>
+        <p class="lede">We design and build bold, fast websites for villas, resorts, wellness brands and independent businesses in Thailand. Easy to find on Google, simple for you to update.</p>
         <div class="hero-actions">
-          <a class="btn" href="#contact">Book a free consultation</a>
-          <a class="link" href="#work">See the work</a>
+          <a class="btn" href="#contact">Book a free consultation →</a>
+          <a class="btn btn--white" href="#work">See the work</a>
         </div>
-        <div class="hero-meta">
-          <div><b>3–6 weeks</b><span>Typical launch</span></div>
-          <div><b>EN · TH</b><span>Bilingual sites</span></div>
-          <div><b>You own it</b><span>Domain &amp; code</span></div>
+        <div class="stats">
+          <div class="stat"><b>3–6 weeks</b><span>Typical launch</span></div>
+          <div class="stat"><b>EN · TH</b><span>Bilingual sites</span></div>
+          <div class="stat"><b>100% yours</b><span>Domain &amp; code</span></div>
         </div>
       </div>
-      <div class="light" role="img" aria-label="Afternoon sunlight falling through a window onto a linen wall"><span class="cap">Studio, 4:40 pm</span></div>
+      <div class="hero-art" role="img" aria-label="Illustration of a website window over a sun and sea">
+        <span class="sticker">Now booking Q1 2027</span>
+        <div class="sun"></div>
+        <div class="sea"></div>
+        <div class="win"><i></i><b>yourbusiness.co.th</b></div>
+      </div>
     </div>
   </section>
 
-  <section class="band band--stone statement">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Web design</span><span>Development</span><span>SEO &amp; AI search</span><span>Branding</span><span>Marketing</span><span>Hosting &amp; care</span>
+      <span>Web design</span><span>Development</span><span>SEO &amp; AI search</span><span>Branding</span><span>Marketing</span><span>Hosting &amp; care</span>
+    </div>
+  </div>
+
+  <section class="statement">
     <div class="wrap">
-      <span class="eyebrow">The studio</span>
-      <p class="big">Most of your guests meet you on a phone screen first. We make that first meeting feel like walking into your space: calm, considered, and impossible to forget.</p>
+      <span class="tag tag--mango">The studio</span>
+      <p class="big">Most of your guests meet you on a phone screen first. We make sure that first look is loud, clear and impossible to scroll past.</p>
     </div>
   </section>
 
-  <section class="band" id="services">
+  <section class="band band--mango" id="services">
     <div class="wrap">
       <div class="head">
         <div>
-          <span class="eyebrow">Services</span>
-          <h2>Everything your website needs, <em>in one place</em>.</h2>
+          <span class="tag">Services</span>
+          <h2>Everything your website needs, in <span class="hl hl--lime">one place</span>.</h2>
         </div>
         <p class="lede">One small team, one point of contact, from the first sketch to the monthly report.</p>
       </div>
       <div class="services">
-        <article class="service">
+        <article class="service card">
           <span class="tag">Design</span>
           <h3>Website design</h3>
           <p>Bespoke, mobile-first design that reflects your brand and leads visitors to book, buy or enquire.</p>
           <ul><li>Art direction &amp; layout</li><li>Wireframes &amp; prototypes</li><li>Booking &amp; enquiry flows</li></ul>
         </article>
-        <article class="service">
+        <article class="service card">
           <span class="tag">Build</span>
           <h3>Development</h3>
           <p>Fast, secure sites on WordPress, Shopify or a custom build, handed over with training so you can edit freely.</p>
           <ul><li>WordPress &amp; WooCommerce</li><li>Shopify stores</li><li>Booking engine &amp; API links</li></ul>
         </article>
-        <article class="service">
+        <article class="service card">
           <span class="tag">Be found</span>
           <h3>SEO &amp; AI search</h3>
           <p>Visibility on Google, Google Maps and AI assistants like ChatGPT, so people find you when they search “villa Koh Samui”.</p>
           <ul><li>Technical &amp; local SEO</li><li>Google Business Profile</li><li>AI answer visibility</li></ul>
         </article>
-        <article class="service">
+        <article class="service card">
           <span class="tag">Brand</span>
           <h3>Identity &amp; content</h3>
           <p>Logos, typography, photography direction and copy in English and Thai, written to sound like you.</p>
           <ul><li>Logo &amp; visual identity</li><li>Bilingual copywriting</li><li>Photo &amp; video shoots</li></ul>
         </article>
-        <article class="service">
+        <article class="service card">
           <span class="tag">Grow</span>
           <h3>Marketing</h3>
           <p>Google Ads, social media and email campaigns that bring the right guests, reported in plain language.</p>
           <ul><li>Google &amp; Meta ads</li><li>Instagram management</li><li>Newsletters</li></ul>
         </article>
-        <article class="service">
+        <article class="service card">
           <span class="tag">Care</span>
           <h3>Hosting &amp; care</h3>
           <p>Updates, backups, security and small changes each month, so your site stays fast and you never have to think about it.</p>
@@ -346,97 +348,96 @@ footer a:hover { color: var(--on-shade); }
     </div>
   </section>
 
-  <section class="band band--stone" id="work">
+  <section id="work">
     <div class="wrap">
       <div class="head">
         <div>
-          <span class="eyebrow">Selected work</span>
-          <h2>Moments in <em>light</em>.</h2>
+          <span class="tag tag--hib">Selected work</span>
+          <h2>Fresh off the <span class="hl hl--mango">island</span>.</h2>
         </div>
-        <a class="link" href="#contact">Discuss your project</a>
+        <a class="btn btn--white" href="#contact">Discuss your project</a>
       </div>
       <div class="work">
-        <a class="project" href="#contact">
-          <div class="light"><div class="frame"><i></i><b><small>Private villa · Chaweng Noi</small>Baan Talay</b></div></div>
-          <div class="row"><h3>Baan Talay Villa</h3><span>Hospitality · Koh Samui</span></div>
-          <p>Direct-booking website with a calendar, gallery and bilingual pages.</p>
+        <a class="project card p1" href="#contact">
+          <div class="shot"><div class="win"><i></i><b>Baan Talay</b></div></div>
+          <div class="body"><div class="row"><h3>Baan Talay Villa</h3><span class="tag">Hospitality · Koh Samui</span></div><p>Direct-booking website with a calendar, gallery and bilingual pages.</p></div>
         </a>
-        <a class="project" href="#contact">
-          <div class="light v2"><div class="frame"><i></i><b><small>Wellness clinic</small>Aura</b></div></div>
-          <div class="row"><h3>Aura Wellness</h3><span>Clinic · Bangkok</span></div>
-          <p>Treatment menus, online booking and local SEO in Sukhumvit.</p>
+        <a class="project card p2" href="#contact">
+          <div class="shot"><div class="win"><i></i><b>Aura</b></div></div>
+          <div class="body"><div class="row"><h3>Aura Wellness</h3><span class="tag">Clinic · Bangkok</span></div><p>Treatment menus, online booking and local SEO in Sukhumvit.</p></div>
         </a>
-        <a class="project" href="#contact">
-          <div class="light v3"><div class="frame"><i></i><b><small>Coffee roasters</small>Rim Nam</b></div></div>
-          <div class="row"><h3>Rim Nam Coffee</h3><span>E-commerce · Bophut</span></div>
-          <p>Shopify store and brand refresh for a small-batch roaster.</p>
+        <a class="project card p3" href="#contact">
+          <div class="shot"><div class="win"><i></i><b>Rim Nam</b></div></div>
+          <div class="body"><div class="row"><h3>Rim Nam Coffee</h3><span class="tag">E-commerce · Bophut</span></div><p>Shopify store and brand refresh for a small-batch roaster.</p></div>
         </a>
-        <a class="project" href="#contact">
-          <div class="light v4"><div class="frame"><i></i><b><small>Muay Thai camp</small>Kru Lek</b></div></div>
-          <div class="row"><h3>Kru Lek Muay Thai</h3><span>Fitness · Lamai</span></div>
-          <p>Class schedules, training packages and international bookings.</p>
+        <a class="project card p4" href="#contact">
+          <div class="shot"><div class="win"><i></i><b>Kru Lek</b></div></div>
+          <div class="body"><div class="row"><h3>Kru Lek Muay Thai</h3><span class="tag">Fitness · Lamai</span></div><p>Class schedules, training packages and international bookings.</p></div>
         </a>
       </div>
-      <p class="note">Example projects shown for preview. Replace with your real case studies and photography.</p>
+      <p class="note">* Example projects shown for preview. Replace with your real case studies and screenshots.</p>
     </div>
   </section>
 
-  <section class="band band--shade" id="process">
+  <section class="band band--ink" id="process">
     <div class="wrap">
       <div class="head">
         <div>
-          <span class="eyebrow">How we work</span>
-          <h2>A clear path from first chat to launch.</h2>
+          <span class="tag tag--mango">How we work</span>
+          <h2>From first chat to <span class="hl hl--lime">launch</span>.</h2>
         </div>
       </div>
       <div class="steps">
-        <div class="step"><span class="n">1</span><h3>Discover</h3><p>A free call to understand your business, your guests and your goals.</p><span class="wk">Week 1</span></div>
-        <div class="step"><span class="n">2</span><h3>Design</h3><p>Sitemap, wireframes and a visual direction for you to approve.</p><span class="wk">Weeks 1–2</span></div>
-        <div class="step"><span class="n">3</span><h3>Build</h3><p>We develop the site, write the content and set up SEO from day one.</p><span class="wk">Weeks 2–4</span></div>
-        <div class="step"><span class="n">4</span><h3>Launch</h3><p>Testing on every device, then go live with hosting and domain handled.</p><span class="wk">Weeks 4–6</span></div>
-        <div class="step"><span class="n">5</span><h3>Care</h3><p>Training, monthly updates and reports, with support whenever you need it.</p><span class="wk">Ongoing</span></div>
+        <div class="step"><span class="n">1</span><h3>Discover</h3><p>A free call to understand your business, your guests and your goals.</p><span class="tag tag--lime">Week 1</span></div>
+        <div class="step"><span class="n">2</span><h3>Design</h3><p>Sitemap, wireframes and a visual direction for you to approve.</p><span class="tag tag--lime">Weeks 1–2</span></div>
+        <div class="step"><span class="n">3</span><h3>Build</h3><p>We develop the site, write the content and set up SEO from day one.</p><span class="tag tag--lime">Weeks 2–4</span></div>
+        <div class="step"><span class="n">4</span><h3>Launch</h3><p>Testing on every device, then go live with hosting and domain handled.</p><span class="tag tag--lime">Weeks 4–6</span></div>
+        <div class="step"><span class="n">5</span><h3>Care</h3><p>Training, monthly updates and reports, with support whenever you need it.</p><span class="tag tag--lime">Ongoing</span></div>
       </div>
     </div>
   </section>
 
-  <section class="band" id="packages">
+  <section id="packages">
     <div class="wrap">
       <div class="head">
         <div>
-          <span class="eyebrow">Packages</span>
-          <h2>Simple, honest pricing.</h2>
+          <span class="tag tag--lagoon">Packages</span>
+          <h2>Simple, honest <span class="hl">pricing</span>.</h2>
         </div>
         <p class="lede">Fixed prices in Thai baht, no hidden fees. Every project starts with a free consultation.</p>
       </div>
       <div class="plans">
-        <article class="plan">
-          <span class="eyebrow">Essential</span>
-          <div class="price">฿35,000 <small>one-time</small></div>
-          <p class="for">For cafés, gyms and small businesses that need a beautiful presence.</p>
+        <article class="plan card">
+          <span class="tag">Essential</span>
+          <div class="price">฿35,000<small>one-time</small></div>
+          <p>For cafés, gyms and small businesses that need a sharp presence.</p>
           <ul><li>Up to 5 pages</li><li>Mobile-first design</li><li>Contact form &amp; LINE button</li><li>Basic SEO &amp; Google Maps</li></ul>
         </article>
-        <article class="plan featured">
-          <span class="eyebrow">Signature</span>
-          <div class="price">฿85,000 <small>one-time</small></div>
-          <p class="for">For villas, resorts and clinics that take bookings online.</p>
+        <article class="plan card featured">
+          <span class="tag tag--hib pop">Most popular</span>
+          <span class="tag">Signature</span>
+          <div class="price">฿85,000<small>one-time</small></div>
+          <p>For villas, resorts and clinics that take bookings online.</p>
           <ul><li>Up to 12 pages, EN &amp; TH</li><li>Bespoke design &amp; copywriting</li><li>Booking or e-commerce</li><li>Full SEO setup</li></ul>
         </article>
-        <article class="plan">
-          <span class="eyebrow">Care plan</span>
-          <div class="price">฿4,500 <small>/ month</small></div>
-          <p class="for">Keep everything fast, secure and up to date after launch.</p>
+        <article class="plan card">
+          <span class="tag">Care plan</span>
+          <div class="price">฿4,500<small>per month</small></div>
+          <p>Keep everything fast, secure and up to date after launch.</p>
           <ul><li>Hosting &amp; daily backups</li><li>Updates &amp; security</li><li>Small content changes</li><li>Monthly visibility report</li></ul>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="band band--stone about" id="about">
+  <section class="band band--lagoon about" id="about">
     <div class="wrap">
-      <div class="light v2" role="img" aria-label="Soft shadows of palm leaves on a plaster wall"><span class="cap">Bophut, Koh Samui</span></div>
+      <div class="about-art" role="img" aria-label="Four colour blocks reading Samui, Bangkok, EN and TH">
+        <div>Samui</div><div>BKK</div><div>EN</div><div>TH</div>
+      </div>
       <div class="about-copy">
-        <span class="eyebrow">About</span>
-        <h2>A small studio, <em>by design</em>.</h2>
+        <span class="tag">About</span>
+        <h2>A small studio, <span class="hl hl--mango">on purpose</span>.</h2>
         <p class="lede">We are a team of designers and developers based between Koh Samui and Bangkok. We keep the studio small so every client works directly with the people building their site.</p>
         <div class="values">
           <div><h3>Personal</h3><p>One point of contact, on email, WhatsApp or LINE.</p></div>
@@ -448,12 +449,12 @@ footer a:hover { color: var(--on-shade); }
     </div>
   </section>
 
-  <section class="band band--shade contact" id="contact">
+  <section class="band band--ink contact" id="contact">
     <div class="wrap">
       <div class="contact-info">
-        <span class="eyebrow">Contact</span>
-        <h2>Let’s begin your <em>project</em>.</h2>
-        <p style="color: color-mix(in srgb, var(--on-shade) 70%, transparent)">Tell us a little about your business and we will reply within one working day to arrange a free consultation.</p>
+        <span class="tag tag--lime">Contact</span>
+        <h2>Let’s build your <span class="hl">website</span>.</h2>
+        <p>Tell us a little about your business and we will reply within one working day to arrange a free consultation.</p>
         <dl>
           <div><dt>Email</dt><dd>hello@saltlight.studio</dd></div>
           <div><dt>Phone · WhatsApp · LINE</dt><dd>+66 00 000 0000</dd></div>
@@ -470,7 +471,7 @@ footer a:hover { color: var(--on-shade); }
           </select>
         </div>
         <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message"></textarea></div>
-        <div><button class="btn btn--light" type="submit">Send enquiry</button></div>
+        <div><button class="btn" type="submit">Send enquiry →</button></div>
         <p class="sent" id="f-status" hidden></p>
       </form>
     </div>

@@ -20,3 +20,7 @@ Open `index.html` in a browser, or run `python3 -m http.server` and visit http:/
 - Portfolio projects (sample projects)
 - The light-and-shadow panels (swap in real photography)
 - The contact form, which isn't connected yet (use Formspree, Netlify Forms or similar)
+
+## Alternative design
+
+`index_notion.html` is a Notion-style version of the same site. Open it directly to compare, or rename it to `index.html` to make it the main page.

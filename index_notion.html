@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Saltlight Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A small web design studio on Koh Samui and in Bangkok. Websites for villas, resorts, clinics and independent brands.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: Notion-like calm. White page, centred hero, soft grey cards with gentle radius, thin line icons,
+   a "workspace" mock as the hero image and a database-style table for the process.
+   One light look by design; the four header pickers drive --primary, --secondary, --bg and --text,
+   and every other colour is mixed from those. */
+:root {
+  --primary: #ff6b4a;   /* buttons, highlights */
+  --secondary: #0f4c5c; /* links, icons, tags */
+  --bg: #ffffff;        /* page */
+  --text: #191918;      /* text and lines */
+  --muted: color-mix(in srgb, var(--text) 62%, var(--bg));
+  --faint: color-mix(in srgb, var(--text) 42%, var(--bg));
+  --line: color-mix(in srgb, var(--text) 10%, var(--bg));
+  --card: color-mix(in srgb, var(--text) 4%, var(--bg));
+  --primary-soft: color-mix(in srgb, var(--primary) 14%, var(--bg));
+  --secondary-soft: color-mix(in srgb, var(--secondary) 12%, var(--bg));
+  --on-primary: #ffffff;
+  --sans: "Inter", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r: 12px;
+  --r-sm: 8px;
+  --wrap: 1120px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--secondary); outline-offset: 2px; border-radius: 4px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(24px, env(safe-area-inset-left, 0px));
+  padding-right: max(24px, env(safe-area-inset-right, 0px));
+}
+@media (max-width: 480px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
+section { padding-block: clamp(64px, 9vw, 120px); }
+
+h1, h2, h3 { margin: 0; text-wrap: balance; letter-spacing: -.022em; line-height: 1.1; font-weight: 700; }
+h1 { font-size: clamp(42px, 6.6vw, 76px); letter-spacing: -.035em; line-height: 1.04; }
+h2 { font-size: clamp(32px, 4.2vw, 50px); letter-spacing: -.03em; }
+h3 { font-size: 19px; font-weight: 600; letter-spacing: -.012em; }
+p { margin: 0; max-width: 62ch; }
+.lede { font-size: clamp(18px, 1.6vw, 21px); color: var(--muted); }
+.eyebrow { font-size: 14px; font-weight: 600; color: var(--secondary); }
+.mark { background: linear-gradient(transparent 62%, var(--primary-soft) 62%); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 16px/1 var(--sans); text-decoration: none; cursor: pointer;
+  padding: 12px 18px; border-radius: var(--r-sm); border: 1px solid transparent;
+  background: var(--primary); color: var(--on-primary);
+  transition: filter .15s ease, background .15s ease;
+}
+.btn:hover { filter: brightness(.94); }
+.btn--ghost { background: var(--card); color: var(--text); }
+.btn--ghost:hover { filter: none; background: var(--line); }
+.link { color: var(--secondary); font-weight: 500; text-decoration: none; }
+.link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Header */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 18px; padding-block: 12px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; letter-spacing: -.01em; text-decoration: none; white-space: nowrap; }
+.brand i { display: grid; place-items: center; width: 28px; height: 28px; border: 1.5px solid var(--text); border-radius: 7px; font: 700 15px/1 var(--serif); font-style: normal; background: var(--bg); }
+nav.menu { display: flex; align-items: center; gap: 2px; }
+nav.menu a { font-size: 15px; font-weight: 500; text-decoration: none; padding: 6px 10px; border-radius: 6px; color: var(--text); }
+nav.menu a:hover { background: var(--card); }
+.top .btn { padding: 9px 14px; font-size: 15px; white-space: nowrap; flex: none; }
+@media (max-width: 980px) { nav.menu { display: none; } }
+
+/* Colour pickers (design tool; remove before launch) */
+.pickers { display: flex; align-items: center; gap: 6px; margin-left: auto; padding: 4px 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.pick { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; padding: 2px 4px; border-radius: 6px; }
+.pick:hover { background: var(--card); }
+.pick input[type="color"] { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: none; cursor: pointer; overflow: hidden; }
+.pick input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.pick input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 50%; }
+.pick input[type="color"]::-moz-color-swatch { border: 0; border-radius: 50%; }
+.pick-btn { font: 500 12px/1 var(--sans); background: var(--card); color: var(--text); border: 0; border-radius: 6px; padding: 7px 9px; cursor: pointer; }
+.pick-btn:hover { background: var(--line); }
+@media (max-width: 1440px) { .pick span { display: none; } }
+@media (max-width: 600px) { .top .wrap { flex-wrap: wrap; } .pickers { order: 3; width: 100%; justify-content: space-between; margin-left: 0; } .top .btn { margin-left: auto; } }
+
+/* Hero */
+.hero { padding-bottom: 0; text-align: center; }
+.hero .wrap { display: grid; justify-items: center; gap: 22px; }
+.hero .lede { max-width: 56ch; }
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 6px; }
+.hero-note { font-size: 14px; color: var(--faint); }
+
+/* Workspace mock: a project page in a doc tool */
+.workspace { width: 100%; max-width: 980px; margin-top: 40px; text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 6%, transparent), 0 24px 60px -30px color-mix(in srgb, var(--text) 30%, transparent); overflow: hidden; display: grid; grid-template-columns: 220px 1fr; }
+.ws-side { background: var(--card); border-right: 1px solid var(--line); padding: 16px 12px; display: grid; gap: 2px; align-content: start; font-size: 14px; }
+.ws-side b { font-size: 12px; font-weight: 600; color: var(--faint); padding: 10px 8px 4px; }
+.ws-side span { padding: 5px 8px; border-radius: 6px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ws-side span.on { background: var(--line); color: var(--text); font-weight: 500; }
+.ws-main { padding: clamp(20px, 3.4vw, 40px) clamp(20px, 4vw, 52px) 32px; display: grid; gap: 14px; min-width: 0; }
+.ws-cover { height: 84px; border-radius: 8px; background: linear-gradient(120deg, var(--secondary) 0%, color-mix(in srgb, var(--secondary) 60%, var(--primary)) 100%); position: relative; }
+.ws-cover::after { content: ""; position: absolute; right: 14%; top: 18px; width: 46px; height: 46px; border-radius: 50%; background: var(--primary); }
+.ws-main h3 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 700; letter-spacing: -.02em; }
+.props { display: grid; grid-template-columns: 110px 1fr; gap: 6px 14px; font-size: 14px; }
+.props dt { color: var(--faint); margin: 0; }
+.props dd { margin: 0; }
+.pill { display: inline-block; font-size: 13px; font-weight: 500; padding: 1px 8px; border-radius: 5px; background: var(--secondary-soft); color: var(--secondary); white-space: nowrap; }
+.pill--p { background: var(--primary-soft); color: color-mix(in srgb, var(--primary) 70%, var(--text)); }
+.pill--g { background: var(--card); color: var(--muted); }
+.todo { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 6px; font-size: 15px; }
+.todo li { display: flex; align-items: center; gap: 10px; }
+.todo li::before { content: ""; flex: none; width: 16px; height: 16px; border: 1.5px solid var(--faint); border-radius: 3px; }
+.todo li.done { color: var(--faint); text-decoration: line-through; }
+.todo li.done::before { background: var(--secondary); border-color: var(--secondary); box-shadow: inset 0 0 0 3px var(--bg); }
+@media (max-width: 760px) { .workspace { grid-template-columns: 1fr; } .ws-side { display: none; } .props { grid-template-columns: 96px 1fr; } }
+
+/* Logos */
+.logos { padding-block: 56px 0; text-align: center; }
+.logos p { margin-inline: auto; font-size: 14px; color: var(--faint); }
+.logo-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 44px; margin-top: 22px; font-weight: 700; font-size: 20px; letter-spacing: -.02em; color: var(--muted); }
+.logo-row span:nth-child(2) { font-family: var(--serif); font-style: italic; font-weight: 500; }
+.logo-row span:nth-child(4) { font-family: var(--mono); font-size: 17px; font-weight: 500; letter-spacing: 0; }
+
+/* Section heads */
+.head { display: grid; gap: 14px; margin-bottom: clamp(36px, 5vw, 56px); max-width: 720px; }
+.head--center { text-align: center; justify-items: center; margin-inline: auto; }
+
+/* Services */
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.svc { background: var(--card); border-radius: var(--r); padding: 26px 24px; display: grid; gap: 10px; align-content: start; transition: background .15s ease; }
+.svc:hover { background: color-mix(in srgb, var(--text) 6.5%, var(--bg)); }
+.svc svg { width: 40px; height: 40px; stroke: var(--text); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.svc svg .acc { fill: var(--primary); stroke: none; }
+.svc p { color: var(--muted); font-size: 16px; }
+.svc ul { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+@media (max-width: 920px) { .grid3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .grid3 { grid-template-columns: 1fr; } }
+
+/* Work */
+.work { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.proj { display: grid; text-decoration: none; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; transition: box-shadow .2s ease, transform .2s ease; }
+.proj:hover { box-shadow: 0 16px 40px -24px color-mix(in srgb, var(--text) 40%, transparent); transform: translateY(-2px); }
+.thumb { aspect-ratio: 16 / 9; max-width: 100%; position: relative; overflow: hidden; display: grid; place-items: center; }
+.thumb .page { width: 70%; height: 70%; background: var(--bg); border-radius: 8px; box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--text) 45%, transparent); display: grid; grid-template-rows: 22px 1fr; overflow: hidden; }
+.thumb .page i { border-bottom: 1px solid var(--line); display: flex; align-items: center; padding-left: 10px; }
+.thumb .page i::before { content: ""; width: 34px; height: 7px; background: radial-gradient(circle, var(--line) 3px, transparent 3.5px) 0 0 / 11px 7px repeat-x; }
+.thumb .page b { display: grid; place-content: center; text-align: center; gap: 4px; font-size: clamp(16px, 2vw, 22px); letter-spacing: -.02em; padding: 8px; }
+.thumb .page b small { font-size: 11px; font-weight: 500; color: var(--faint); letter-spacing: 0; }
+.t1 { background: var(--secondary-soft); } .t2 { background: var(--primary-soft); } .t3 { background: var(--card); } .t4 { background: color-mix(in srgb, var(--secondary) 22%, var(--bg)); }
+.proj .body { padding: 18px 20px 20px; display: grid; gap: 6px; border-top: 1px solid var(--line); }
+.proj .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.proj p { color: var(--muted); font-size: 15px; }
+.note { font-size: 14px; color: var(--faint); margin-top: 24px; }
+@media (max-width: 720px) { .work { grid-template-columns: 1fr; } }
+
+/* Process: database table */
+.db { border: 1px solid var(--line); border-radius: var(--r); overflow-x: auto; }
+.db table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 15px; }
+.db th { text-align: left; font-weight: 500; font-size: 13px; color: var(--faint); padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--card); white-space: nowrap; }
+.db td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.db tr:last-child td { border-bottom: 0; }
+.db td:first-child { font-weight: 600; white-space: nowrap; }
+.db td:first-child span { color: var(--faint); font-weight: 500; margin-right: 10px; font-variant-numeric: tabular-nums; }
+.db td:nth-child(2) { color: var(--muted); }
+.db td:nth-child(3) { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* Quote */
+.quote { text-align: center; }
+.quote blockquote { margin: 0 auto; max-width: 30ch; font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.8vw, 44px); line-height: 1.25; letter-spacing: -.01em; }
+.quote cite { display: block; margin-top: 20px; font-style: normal; font-size: 15px; color: var(--muted); }
+
+/* Pricing */
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.plan { border: 1px solid var(--line); border-radius: var(--r); padding: 26px 24px; display: grid; gap: 16px; align-content: start; background: var(--bg); position: relative; }
+.plan.featured { border: 2px solid var(--primary); }
+.plan .badge { position: absolute; top: -12px; left: 22px; }
+.plan .name { font-weight: 600; }
+.plan .price { font-size: clamp(32px, 3.4vw, 40px); font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.plan .price small { font-size: 15px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
+.plan > p { color: var(--muted); font-size: 15px; }
+.plan ul { list-style: none; padding: 16px 0 0; margin: 0; border-top: 1px solid var(--line); display: grid; gap: 9px; font-size: 15px; }
+.plan li { display: flex; gap: 10px; align-items: baseline; }
+.plan li::before { content: "✓"; color: var(--secondary); font-weight: 700; }
+.plan .btn { justify-self: start; }
+@media (max-width: 880px) { .plans { grid-template-columns: 1fr; } }
+
+/* About */
+.about .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.about-copy { display: grid; gap: 18px; min-width: 0; }
+.values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.values div { background: var(--card); border-radius: var(--r); padding: 18px; display: grid; gap: 4px; }
+.values h3 { font-size: 16px; }
+.values p { font-size: 15px; color: var(--muted); }
+.doodle { width: 100%; max-width: 460px; justify-self: center; }
+.doodle svg { width: 100%; height: auto; display: block; }
+@media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } .doodle { max-width: 320px; } }
+@media (max-width: 460px) { .values { grid-template-columns: 1fr; } }
+
+/* FAQ */
+.faq { max-width: 760px; margin-inline: auto; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 18px 4px; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--faint); font-weight: 400; font-size: 22px; line-height: 1; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 4px 20px; color: var(--muted); }
+
+/* Contact */
+.contact .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 80px); align-items: start; }
+.contact-info { display: grid; gap: 18px; min-width: 0; }
+.contact-info dl { margin: 8px 0 0; display: grid; gap: 14px; }
+.contact-info dt { font-size: 13px; color: var(--faint); }
+.contact-info dd { margin: 2px 0 0; font-weight: 600; user-select: all; overflow-wrap: anywhere; }
+form { display: grid; gap: 16px; min-width: 0; background: var(--card); border-radius: 16px; padding: clamp(20px, 3vw, 32px); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+label.f { font-size: 14px; font-weight: 500; }
+input, select, textarea { font: inherit; font-size: 16px; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 12px; width: 100%; }
+textarea { resize: vertical; min-height: 110px; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px var(--secondary-soft); }
+form .btn { justify-self: start; }
+.sent { font-size: 15px; background: var(--secondary-soft); color: var(--secondary); border-radius: var(--r-sm); padding: 10px 12px; }
+@media (max-width: 860px) { .contact .wrap { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+/* Footer */
+footer { border-top: 1px solid var(--line); }
+footer .wrap { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 28px; padding-block: 48px 36px; font-size: 14px; }
+footer h4 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--muted); }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--text); }
+footer .legal { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 20px; color: var(--faint); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer .about-f { display: grid; gap: 12px; align-content: start; color: var(--muted); }
+@media (max-width: 760px) { footer .wrap { grid-template-columns: 1fr 1fr; } footer .about-f { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><i>S</i>Saltlight</a>
+    <nav class="menu" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="pickers" role="group" aria-label="Site colours">
+      <label class="pick" for="c-primary"><input type="color" id="c-primary" data-var="--primary" value="#ff6b4a"><span>Primary</span></label>
+      <label class="pick" for="c-secondary"><input type="color" id="c-secondary" data-var="--secondary" value="#0f4c5c"><span>Secondary</span></label>
+      <label class="pick" for="c-bg"><input type="color" id="c-bg" data-var="--bg" value="#ffffff"><span>Background</span></label>
+      <label class="pick" for="c-text"><input type="color" id="c-text" data-var="--text" value="#191918"><span>Text</span></label>
+      <button class="pick-btn" type="button" id="c-copy">Copy</button>
+      <button class="pick-btn" type="button" id="c-reset">Reset</button>
+    </div>
+    <a class="btn" href="#contact">Book a call</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Web design studio · Koh Samui &amp; Bangkok</span>
+      <h1>Your website,<br>beautifully <span class="mark">handled</span>.</h1>
+      <p class="lede">We design, build and look after websites for villas, resorts, clinics and independent businesses in Thailand. One team, one plan, and a site you can actually update.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#contact">Book a free consultation</a>
+        <a class="btn btn--ghost" href="#work">See our work →</a>
+      </div>
+      <span class="hero-note">Launch in 3–6 weeks · English &amp; Thai · You own everything</span>
+
+      <div class="workspace" aria-label="Example project page from our client workspace">
+        <div class="ws-side" aria-hidden="true">
+          <b>Client workspace</b>
+          <span>🏠 Home</span>
+          <span class="on">🌴 Baan Talay Villa</span>
+          <span>🌿 Aura Wellness</span>
+          <span>☕ Rim Nam Coffee</span>
+          <b>Studio</b>
+          <span>📋 Content checklist</span>
+          <span>📈 Monthly reports</span>
+        </div>
+        <div class="ws-main">
+          <div class="ws-cover" aria-hidden="true"></div>
+          <h3>Baan Talay Villa · New website</h3>
+          <dl class="props">
+            <dt>Status</dt><dd><span class="pill pill--p">In design</span></dd>
+            <dt>Launch</dt><dd>12 Dec 2026</dd>
+            <dt>Languages</dt><dd><span class="pill">EN</span> <span class="pill">TH</span></dd>
+            <dt>Package</dt><dd><span class="pill pill--g">Signature</span></dd>
+          </dl>
+          <ul class="todo">
+            <li class="done">Discovery call and sitemap</li>
+            <li class="done">Moodboard approved</li>
+            <li>Homepage and booking flow design</li>
+            <li>Photo shoot, Chaweng Noi</li>
+            <li>Google Business Profile set-up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="logos">
+    <div class="wrap">
+      <p>Built for businesses across Koh Samui and Bangkok (example clients)</p>
+      <div class="logo-row" aria-hidden="true"><span>BAAN TALAY</span><span>Aura Wellness</span><span>Rim Nam</span><span>kru_lek</span><span>Sala Bophut</span></div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Services</span>
+        <h2>Everything your website needs, in one place.</h2>
+        <p class="lede">From the first sketch to the monthly report, with one point of contact the whole way.</p>
+      </div>
+      <div class="grid3">
+        <article class="svc">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="8" width="30" height="22" rx="3"/><path d="M5 13h30"/><circle class="acc" cx="27" cy="22" r="4"/><path d="M10 20h9M10 24h6"/></svg>
+          <h3>Website design</h3>
+          <p>Bespoke, mobile-first design that reflects your brand and leads visitors to book, buy or enquire.</p>
+          <ul><li class="pill pill--g">Art direction</li><li class="pill pill--g">Prototypes</li><li class="pill pill--g">Booking flows</li></ul>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M14 12l-8 8 8 8M26 12l8 8-8 8"/><path d="M22 9l-4 22"/><circle class="acc" cx="31" cy="9" r="3"/></svg>
+          <h3>Development</h3>
+          <p>Fast, secure sites on WordPress, Shopify or a custom build, handed over with training so you can edit freely.</p>
+          <ul><li class="pill pill--g">WordPress</li><li class="pill pill--g">Shopify</li><li class="pill pill--g">Integrations</li></ul>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="17" cy="17" r="9"/><path d="M24 24l9 9"/><circle class="acc" cx="17" cy="17" r="3.5"/></svg>
+          <h3>SEO &amp; AI search</h3>
+          <p>Be found on Google, Google Maps and AI assistants when people search for “villa Koh Samui”.</p>
+          <ul><li class="pill pill--g">Local SEO</li><li class="pill pill--g">Google Business</li><li class="pill pill--g">AI answers</li></ul>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 32l4-12 14-14 8 8-14 14z"/><path d="M22 10l8 8"/><circle class="acc" cx="10" cy="32" r="3"/></svg>
+          <h3>Brand &amp; content</h3>
+          <p>Logos, typography, photo direction and copy in English and Thai, written to sound like you.</p>
+          <ul><li class="pill pill--g">Identity</li><li class="pill pill--g">Copywriting</li><li class="pill pill--g">Photo &amp; video</li></ul>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 32h28"/><path d="M10 27v-6M17 27V15M24 27v-9M31 27V9"/><circle class="acc" cx="31" cy="9" r="3"/></svg>
+          <h3>Marketing</h3>
+          <p>Google Ads, social media and email campaigns that bring the right guests, reported in plain language.</p>
+          <ul><li class="pill pill--g">Ads</li><li class="pill pill--g">Instagram</li><li class="pill pill--g">Newsletters</li></ul>
+        </article>
+        <article class="svc">
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5l12 5v9c0 8-5 13-12 16-7-3-12-8-12-16v-9z"/><path d="M15 20l4 4 7-8"/><circle class="acc" cx="32" cy="10" r="3"/></svg>
+          <h3>Hosting &amp; care</h3>
+          <p>Updates, backups, security and small changes every month, so your site stays fast without you thinking about it.</p>
+          <ul><li class="pill pill--g">Hosting</li><li class="pill pill--g">Backups</li><li class="pill pill--g">LINE support</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Selected work</span>
+        <h2>Recent projects.</h2>
+      </div>
+      <div class="work">
+        <a class="proj" href="#contact">
+          <div class="thumb t1"><div class="page"><i></i><b>Baan Talay<small>Private villa · Chaweng Noi</small></b></div></div>
+          <div class="body"><div class="row"><h3>Baan Talay Villa</h3><span class="pill">Hospitality</span></div><p>Direct-booking website with a calendar, gallery and bilingual pages.</p></div>
+        </a>
+        <a class="proj" href="#contact">
+          <div class="thumb t2"><div class="page"><i></i><b>Aura<small>Wellness clinic · Sukhumvit</small></b></div></div>
+          <div class="body"><div class="row"><h3>Aura Wellness</h3><span class="pill pill--p">Clinic</span></div><p>Treatment menus, online booking and local SEO in Bangkok.</p></div>
+        </a>
+        <a class="proj" href="#contact">
+          <div class="thumb t3"><div class="page"><i></i><b>Rim Nam<small>Coffee roasters · Bophut</small></b></div></div>
+          <div class="body"><div class="row"><h3>Rim Nam Coffee</h3><span class="pill pill--g">E-commerce</span></div><p>Shopify store and brand refresh for a small-batch roaster.</p></div>
+        </a>
+        <a class="proj" href="#contact">
+          <div class="thumb t4"><div class="page"><i></i><b>Kru Lek<small>Muay Thai camp · Lamai</small></b></div></div>
+          <div class="body"><div class="row"><h3>Kru Lek Muay Thai</h3><span class="pill">Fitness</span></div><p>Class schedules, training packages and international bookings.</p></div>
+        </a>
+      </div>
+      <p class="note">Example projects shown for preview. Replace with your real case studies and screenshots.</p>
+    </div>
+  </section>
+
+  <section id="process" style="background: var(--card)">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">How we work</span>
+        <h2>A clear plan from first call to launch.</h2>
+        <p class="lede">Every client gets a shared project page like this one, so you always know what happens next.</p>
+      </div>
+      <div class="db" style="background: var(--bg)">
+        <table>
+          <thead><tr><th>Step</th><th>What happens</th><th>Timing</th><th>You get</th></tr></thead>
+          <tbody>
+            <tr><td><span>1</span>Discover</td><td>A free call about your business, guests and goals.</td><td>Week 1</td><td><span class="pill">Plan &amp; fixed quote</span></td></tr>
+            <tr><td><span>2</span>Design</td><td>Sitemap, wireframes and a visual direction for you to approve.</td><td>Weeks 1–2</td><td><span class="pill">Clickable prototype</span></td></tr>
+            <tr><td><span>3</span>Build</td><td>We develop the site, write the content and set up SEO.</td><td>Weeks 2–4</td><td><span class="pill">Staging site</span></td></tr>
+            <tr><td><span>4</span>Launch</td><td>Testing on every device, then go live with hosting and domain handled.</td><td>Weeks 4–6</td><td><span class="pill pill--p">Live website</span></td></tr>
+            <tr><td><span>5</span>Care</td><td>Training, monthly updates and plain-language reports.</td><td>Ongoing</td><td><span class="pill pill--g">Monthly report</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="wrap">
+      <blockquote>“A good website should feel like a good host: calm, clear and quick to help.”</blockquote>
+      <cite>The Saltlight approach</cite>
+    </div>
+  </section>
+
+  <section id="pricing" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head head--center">
+        <span class="eyebrow">Pricing</span>
+        <h2>Simple, honest pricing.</h2>
+        <p class="lede">Fixed prices in Thai baht with no hidden fees. Every project starts with a free consultation.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <span class="name">Essential</span>
+          <div class="price">฿35,000<small>one-time</small></div>
+          <p>For cafés, gyms and small businesses that need a professional presence.</p>
+          <a class="btn btn--ghost" href="#contact">Get started</a>
+          <ul><li>Up to 5 pages</li><li>Mobile-first design</li><li>Contact form &amp; LINE button</li><li>Basic SEO &amp; Google Maps</li></ul>
+        </article>
+        <article class="plan featured">
+          <span class="pill pill--p badge">Most popular</span>
+          <span class="name">Signature</span>
+          <div class="price">฿85,000<small>one-time</small></div>
+          <p>For villas, resorts and clinics that take bookings online.</p>
+          <a class="btn" href="#contact">Get started</a>
+          <ul><li>Up to 12 pages, EN &amp; TH</li><li>Bespoke design &amp; copywriting</li><li>Booking or e-commerce</li><li>Full SEO set-up</li></ul>
+        </article>
+        <article class="plan">
+          <span class="name">Care plan</span>
+          <div class="price">฿4,500<small>/ month</small></div>
+          <p>Keep everything fast, secure and up to date after launch.</p>
+          <a class="btn btn--ghost" href="#contact">Add to a project</a>
+          <ul><li>Hosting &amp; daily backups</li><li>Updates &amp; security</li><li>Small content changes</li><li>Monthly visibility report</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about" style="padding-top: 0">
+    <div class="wrap">
+      <div class="doodle" aria-hidden="true">
+        <svg viewBox="0 0 320 260" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="232" cy="64" r="30" fill="var(--primary)" stroke="none"/>
+          <path d="M20 200c30-12 60-12 90 0s60 12 90 0 60-12 100 0"/>
+          <path d="M20 224c30-12 60-12 90 0s60 12 90 0 60-12 100 0" stroke="var(--secondary)"/>
+          <path d="M70 196c4-40 10-80 26-118"/>
+          <path d="M96 78c-22-6-44 0-58 14M96 78c-8-18-26-28-46-28M96 78c14-14 34-18 52-12M96 78c18 0 34 10 42 26"/>
+          <rect x="150" y="120" width="120" height="76" rx="8" fill="var(--bg)"/>
+          <path d="M150 136h120"/>
+          <path d="M164 156h50M164 170h34" stroke="var(--secondary)"/>
+          <circle cx="250" cy="164" r="8" fill="var(--primary)" stroke="none"/>
+        </svg>
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">About</span>
+        <h2>A small studio, on purpose.</h2>
+        <p class="lede">We are designers and developers based between Koh Samui and Bangkok. We keep the studio small so you work directly with the people building your site.</p>
+        <div class="values">
+          <div><h3>Personal</h3><p>One point of contact, on email, WhatsApp or LINE.</p></div>
+          <div><h3>Transparent</h3><p>Fixed quotes and plain-language reports.</p></div>
+          <div><h3>Yours</h3><p>You own your domain, hosting and website from day one.</p></div>
+          <div><h3>Local</h3><p>We know the island, the market and your guests.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top: 0">
+    <div class="wrap">
+      <div class="head head--center"><span class="eyebrow">FAQ</span><h2>Questions, answered.</h2></div>
+      <div class="faq">
+        <details><summary>How long does a website take?</summary><p>Most sites launch in 3 to 6 weeks. The Essential package is usually live in about 3 weeks; booking and e-commerce sites take closer to 6.</p></details>
+        <details><summary>Will I be able to edit the website myself?</summary><p>Yes. We build on WordPress or Shopify and give you a short training session, so you can change text, photos and prices without us.</p></details>
+        <details><summary>Do you make websites in Thai and English?</summary><p>Yes. Our Signature package includes both languages, and we can add Thai to any other package.</p></details>
+        <details><summary>Who owns the website and domain?</summary><p>You do, from day one. The domain, hosting account and code are registered in your name.</p></details>
+        <details><summary>Can you take over an existing website?</summary><p>Yes. We can redesign it, or simply move it onto our Care plan for hosting, updates and support.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" style="background: var(--card)">
+    <div class="wrap">
+      <div class="contact-info">
+        <span class="eyebrow">Contact</span>
+        <h2>Let’s talk about your website.</h2>
+        <p class="lede">Tell us a little about your business. We reply within one working day to arrange a free consultation.</p>
+        <dl>
+          <div><dt>Email</dt><dd>hello@saltlight.studio</dd></div>
+          <div><dt>Phone · WhatsApp · LINE</dt><dd>+66 00 000 0000</dd></div>
+          <div><dt>Studios</dt><dd>Bophut, Koh Samui · Sukhumvit, Bangkok</dd></div>
+        </dl>
+      </div>
+      <form id="enquiry" novalidate style="background: var(--bg); border: 1px solid var(--line)">
+        <div class="row2">
+          <div class="field"><label class="f" for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label class="f" for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label class="f" for="f-biz">Business</label><input id="f-biz" name="business" placeholder="Villa, resort, clinic, café…"></div>
+          <div class="field"><label class="f" for="f-type">What do you need?</label>
+            <select id="f-type" name="type"><option>A new website</option><option>A redesign</option><option>SEO &amp; AI search</option><option>Ongoing care</option><option>Not sure yet</option></select>
+          </div>
+        </div>
+        <div class="field"><label class="f" for="f-msg">Message</label><textarea id="f-msg" name="message"></textarea></div>
+        <button class="btn" type="submit">Send enquiry</button>
+        <p class="sent" id="f-status" hidden></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="about-f"><a class="brand" href="#top"><i>S</i>Saltlight</a><p>Websites for villas, resorts, clinics and independent businesses in Thailand.</p></div>
+    <div><h4>Studio</h4><ul><li><a href="#services">Services</a></li><li><a href="#work">Work</a></li><li><a href="#about">About</a></li></ul></div>
+    <div><h4>Plans</h4><ul><li><a href="#pricing">Essential</a></li><li><a href="#pricing">Signature</a></li><li><a href="#pricing">Care plan</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a href="#contact">Book a call</a></li><li><a href="#faq">FAQ</a></li><li>Koh Samui · Bangkok</li></ul></div>
+    <div class="legal"><span>© 2026 Saltlight Studio</span><span>Made on Koh Samui</span></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('enquiry').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var status = document.getElementById('f-status');
+  var name = document.getElementById('f-name'), email = document.getElementById('f-email');
+  if (!name.value.trim() || !email.value.includes('@')) {
+    status.textContent = 'Please add your name and a valid email address.';
+  } else {
+    status.textContent = 'Thank you, ' + name.value.trim().split(' ')[0] + '. This is a preview, so the form is not connected yet.';
+  }
+  status.hidden = false;
+});
+
+(function () {
+  var root = document.documentElement, KEY = 'site-colours-v2';
+  var inputs = Array.prototype.slice.call(document.querySelectorAll('.pickers input[type="color"]'));
+  var defaults = {};
+  inputs.forEach(function (el) { defaults[el.id] = el.value; });
+  function apply(el) { root.style.setProperty(el.dataset.var, el.value); }
+  function save() {
+    var o = {}; inputs.forEach(function (el) { o[el.id] = el.value; });
+    try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  inputs.forEach(function (el) {
+    if (saved && /^#[0-9a-f]{6}$/i.test(saved[el.id] || '')) { el.value = saved[el.id]; apply(el); }
+    el.addEventListener('input', function () { apply(el); save(); });
+  });
+  document.getElementById('c-reset').addEventListener('click', function () {
+    inputs.forEach(function (el) { el.value = defaults[el.id]; root.style.removeProperty(el.dataset.var); });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+  });
+  var copyBtn = document.getElementById('c-copy');
+  copyBtn.addEventListener('click', function () {
+    var names = { 'c-primary': 'Primary', 'c-secondary': 'Secondary', 'c-bg': 'Background', 'c-text': 'Text' };
+    var text = inputs.map(function (el) { return names[el.id] + ' ' + el.value; }).join(', ');
+    function done(label) { copyBtn.textContent = label; setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600); }
+    copyBtn.title = text;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { done('Copied'); }, function () { done('Copy failed'); });
+    } else { done('Copy failed'); }
+  });
+})();
+</script>
+</body>
+</html>

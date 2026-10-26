@@ -23,7 +23,7 @@
   --teal-ink: #cfe3e6; /* soft text on teal */
   --coral: #ff6b4a;    /* principal colour: actions and emphasis */
   --white: #ffffff;
-  --muted: #4c5355;    /* secondary text on light */
+  --muted: color-mix(in srgb, var(--ink) 72%, var(--paper)); /* secondary text, follows the text and background colours */
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -256,6 +256,17 @@ footer .brand { color: var(--ink); }
 footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; }
+/* Colour pickers in the header (design tool; remove before launch) */
+.pickers { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+.pick { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); cursor: pointer; }
+.pick input[type="color"] { -webkit-appearance: none; appearance: none; width: 26px; height: 26px; padding: 0; border: var(--bw) solid var(--ink); background: none; cursor: pointer; box-shadow: 2px 2px 0 var(--ink); }
+.pick input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.pick input[type="color"]::-webkit-color-swatch { border: 0; }
+.pick input[type="color"]::-moz-color-swatch { border: 0; }
+.pick-btn { font-family: var(--mono); font-size: 10px; font-weight: 700; text-transform: uppercase; background: var(--white); color: var(--ink); border: 1.5px solid var(--ink); padding: 5px 8px; cursor: pointer; }
+.pick-btn:hover { background: var(--ink); color: var(--paper); }
+@media (max-width: 1100px) { .pick span { display: none; } }
+@media (max-width: 560px) { .top .wrap { flex-wrap: wrap; } .pickers { order: 3; width: 100%; margin-left: 0; } nav.menu a.cta { margin-left: 0; } }
 </style>
 </head>
 <body>
@@ -263,6 +274,14 @@ footer a:hover { color: var(--ink); text-decoration: underline; text-decoration-
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top">Saltlight</a>
+    <div class="pickers" role="group" aria-label="Site colours">
+      <label class="pick" for="c-primary"><input type="color" id="c-primary" data-var="--coral" value="#ff6b4a"><span>Primary</span></label>
+      <label class="pick" for="c-secondary"><input type="color" id="c-secondary" data-var="--teal" value="#0f4c5c"><span>Secondary</span></label>
+      <label class="pick" for="c-bg"><input type="color" id="c-bg" data-var="--paper" value="#f2f2f2"><span>Background</span></label>
+      <label class="pick" for="c-text"><input type="color" id="c-text" data-var="--ink" value="#0c0f13"><span>Text</span></label>
+      <button class="pick-btn" type="button" id="c-copy" title="Copy these colours">Copy</button>
+      <button class="pick-btn" type="button" id="c-reset" title="Back to the default colours">Reset</button>
+    </div>
     <nav class="menu" aria-label="Main">
       <a href="#services">Services</a>
       <a href="#work">Work</a>
@@ -521,6 +540,40 @@ document.getElementById('enquiry').addEventListener('submit', function (e) {
   }
   status.hidden = false;
 });
+</script>
+
+<script>
+(function () {
+  var root = document.documentElement, KEY = 'site-colours';
+  var inputs = Array.prototype.slice.call(document.querySelectorAll('.pickers input[type="color"]'));
+  var defaults = {};
+  inputs.forEach(function (el) { defaults[el.id] = el.value; });
+  function apply(el) { root.style.setProperty(el.dataset.var, el.value); }
+  function save() {
+    var o = {}; inputs.forEach(function (el) { o[el.id] = el.value; });
+    try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  inputs.forEach(function (el) {
+    if (saved && /^#[0-9a-f]{6}$/i.test(saved[el.id] || '')) { el.value = saved[el.id]; apply(el); }
+    el.addEventListener('input', function () { apply(el); save(); });
+  });
+  document.getElementById('c-reset').addEventListener('click', function () {
+    inputs.forEach(function (el) { el.value = defaults[el.id]; root.style.removeProperty(el.dataset.var); });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+  });
+  var copyBtn = document.getElementById('c-copy');
+  copyBtn.addEventListener('click', function () {
+    var names = { 'c-primary': 'Primary', 'c-secondary': 'Secondary', 'c-bg': 'Background', 'c-text': 'Text' };
+    var text = inputs.map(function (el) { return names[el.id] + ' ' + el.value; }).join(', ');
+    function done(label) { copyBtn.textContent = label; setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600); }
+    copyBtn.title = text;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { done('Copied'); }, function () { done('Copy failed'); });
+    } else { done('Copy failed'); }
+  });
+})();
 </script>
 </body>
 </html>

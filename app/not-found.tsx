@@ -1,0 +1,24 @@
+import Link from "next/link";
+import "./app.css";
+
+export default function NotFound() {
+  return (
+    <main className="auth">
+      <div className="auth-card">
+        <Link className="brand" href="/">
+          <i>S</i>Saltlight
+        </Link>
+        <h1>Page not found</h1>
+        <p className="muted">That page doesn’t exist, or you don’t have access to it.</p>
+        <div className="actions">
+          <Link className="btn" href="/portal">
+            Go to the portal
+          </Link>
+          <Link className="btn btn--ghost" href="/">
+            Home
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}

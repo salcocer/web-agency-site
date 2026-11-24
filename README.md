@@ -2,7 +2,7 @@
 
 The marketing site for a web design studio on Koh Samui and in Bangkok, plus a client portal where clients follow their website project, send change requests and pay.
 
-- **Next.js 16** (App Router, TypeScript, Cache Components) for the site, portal and staff area
+- **Next.js 16** (App Router, TypeScript) for the site, portal and staff area, hosted on **Cloudflare Workers**
 - **Supabase** for logins (email magic links), the database and row level security
 - **Stripe** Checkout for one-time charges and care plan subscriptions, and Stripe's billing portal for cards and receipts
 
@@ -66,21 +66,43 @@ npm run dev
 
 Open http://localhost:3000. The marketing site works with no keys at all. The portal needs Supabase, and payments need Stripe.
 
-## Deploy (Vercel)
+## Deploy (Cloudflare)
 
-GitHub Pages can't host this any more, because it needs a server. On Vercel:
+The site runs on Cloudflare Workers at https://kata-studio.app, built with the [OpenNext adapter](https://opennext.js.org/cloudflare). The settings are in `wrangler.jsonc` (Worker name, custom domain) and `open-next.config.ts`.
 
-1. Import the repo. No build settings are needed.
-2. Add every variable from `.env.example`, with `NEXT_PUBLIC_SITE_URL` set to the real domain.
-3. In Stripe (live mode when you launch), add a webhook endpoint `https://your-domain/api/stripe/webhook` with these events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`. Use its signing secret as `STRIPE_WEBHOOK_SECRET`.
-4. Run `npm run stripe:setup` once with the live key for live mode.
-5. Add the production domain to Supabase's redirect URLs (step 2.4).
+```sh
+npx wrangler login   # once per computer
+npm run preview      # build and run the Worker locally on http://localhost:8787
+npm run deploy       # build and deploy to kata-studio.app
+```
+
+Settings:
+
+- **Public settings** (`NEXT_PUBLIC_...`) are written into the build, so they go in `.env.production`, which is committed. Never put secret keys there.
+- **Secret keys** go into the Worker: `npx wrangler secret put SUPABASE_SECRET_KEY`, and the same for `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and `STRIPE_PORTAL_CONFIGURATION_ID`.
+
+### Marketing-only until Supabase is connected
+
+Without `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in the build, the site launches without the portal: the client login links are hidden, the contact form is replaced by an email button, and `/portal`, `/admin` and `/login` redirect to the home page. To turn the portal on:
+
+1. Set up Supabase and Stripe (steps 2 and 3 above, with live Stripe keys at launch).
+2. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` to `.env.production`.
+3. Add the secret keys with `npx wrangler secret put` (above).
+4. In Stripe, add a webhook endpoint `https://kata-studio.app/api/stripe/webhook` with these events: `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`. Use its signing secret as `STRIPE_WEBHOOK_SECRET`.
+5. Run `npm run stripe:setup` once with the live key.
+6. Add `https://kata-studio.app/**` to Supabase's redirect URLs (step 2.4), and set the Site URL to `https://kata-studio.app`.
+7. `npm run deploy`, then test sign-in, a request and a payment on the live site.
+
+### Cloudflare limits
+
+- **Cache Components are off.** OpenNext can't run them on Workers yet ([opennextjs-cloudflare#1318](https://github.com/opennextjs/opennextjs-cloudflare/pull/1318)). The Stripe price lookup uses `unstable_cache` instead of `"use cache"`.
+- **`middleware.ts`, not `proxy.ts`.** Next 16's `proxy.ts` always runs on Node.js, which OpenNext supports only experimentally, and it fails on requests with cookies. `middleware.ts` runs on the edge runtime. Next still supports it, but marks it deprecated.
 
 ## Security
 
 - Every table has row level security. Clients can only read their own client's rows. Only staff can write projects, milestones, charges and request statuses. Only the Stripe webhook writes subscriptions. Nobody can change their own role or client.
 - `npm run test:db` runs the migration in Postgres (PGlite) and checks 48 rules: what clients, unlinked users, staff and logged-out visitors can and can't do. Run it after every schema change.
-- Server Actions and route handlers check the caller themselves, and don't rely on the proxy (`proxy.ts`), which only redirects logged-out visitors.
+- Server Actions and route handlers check the caller themselves, and don’t rely on the middleware (`middleware.ts`), which only redirects logged-out visitors.
 - The secret Supabase key (`lib/supabase/admin.ts`) is used only for the webhook, invites, Stripe customer ids and the contact form.
 
 ## Project layout
@@ -103,6 +125,6 @@ After changing the schema, update `lib/database.types.ts`, either by hand or wit
 
 ## Placeholders to replace
 
-- Email address (hello@kata.studio), phone and addresses
+- Email address (hello@kata-studio.app), phone and addresses
 - Package prices on the home page (฿35,000 / ฿85,000 / ฿4,500 per month), and the care plan in `lib/plans.ts`
 - Portfolio projects (sample projects)

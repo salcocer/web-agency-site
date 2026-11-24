@@ -1,6 +1,6 @@
 import "server-only";
 import Stripe from "stripe";
-import { cacheLife } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { env } from "@/lib/env";
 import { carePlans } from "@/lib/plans";
@@ -50,21 +50,23 @@ export async function ensureStripeCustomer(clientId: string, email: string): Pro
 }
 
 // Prices for the plans in lib/plans.ts, read from Stripe and cached for an hour.
-export async function getCarePlanPrices() {
-  "use cache";
-  cacheLife("hours");
-
-  const prices = await getStripe().prices.list({
-    lookup_keys: carePlans.map((plan) => plan.lookupKey),
-    active: true,
-    expand: ["data.product"],
-  });
-  return carePlans.flatMap((plan) => {
-    const price = prices.data.find((p) => p.lookup_key === plan.lookupKey);
-    if (!price || price.unit_amount == null) return [];
-    return [{ ...plan, priceId: price.id, amount: price.unit_amount, currency: price.currency }];
-  });
-}
+// unstable_cache rather than "use cache": Cache Components don't work on Cloudflare yet.
+export const getCarePlanPrices = unstable_cache(
+  async () => {
+    const prices = await getStripe().prices.list({
+      lookup_keys: carePlans.map((plan) => plan.lookupKey),
+      active: true,
+      expand: ["data.product"],
+    });
+    return carePlans.flatMap((plan) => {
+      const price = prices.data.find((p) => p.lookup_key === plan.lookupKey);
+      if (!price || price.unit_amount == null) return [];
+      return [{ ...plan, priceId: price.id, amount: price.unit_amount, currency: price.currency }];
+    });
+  },
+  ["care-plan-prices"],
+  { revalidate: 3600 },
+);
 
 export async function markChargePaid(session: Stripe.Checkout.Session) {
   const chargeId = session.metadata?.charge_id;

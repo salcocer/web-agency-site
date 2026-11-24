@@ -33,9 +33,13 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 !.env.example
+# Public, non-secret production settings.
+!.env.production
 
-# vercel
-.vercel
+# cloudflare
+.open-next
+.wrangler
+.dev.vars*
 
 # typescript
 *.tsbuildinfo

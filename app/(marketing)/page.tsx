@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { supabaseEnabled } from "@/lib/env";
 import { ContactForm } from "./contact-form";
 import "./marketing.css";
 
@@ -124,9 +125,11 @@ export default function HomePage() {
             <a href="#faq">FAQ</a>
           </nav>
           <div className="top-actions">
-            <Link className="login" href="/portal">
-              Client login
-            </Link>
+            {supabaseEnabled() && (
+              <Link className="login" href="/portal">
+                Client login
+              </Link>
+            )}
             <a className="btn" href="#contact">
               Book a call
             </a>
@@ -437,7 +440,7 @@ export default function HomePage() {
               <dl>
                 <div>
                   <dt>Email</dt>
-                  <dd>hello@kata.studio</dd>
+                  <dd>hello@kata-studio.app</dd>
                 </div>
                 <div>
                   <dt>Phone · WhatsApp · LINE</dt>
@@ -449,7 +452,16 @@ export default function HomePage() {
                 </div>
               </dl>
             </div>
-            <ContactForm />
+            {supabaseEnabled() ? (
+              <ContactForm />
+            ) : (
+              <div className="enquiry">
+                <p>Send us a few lines about your business and what you need, and we’ll set up a call.</p>
+                <a className="btn" href="mailto:hello@kata-studio.app?subject=Website%20enquiry">
+                  Email hello@kata-studio.app
+                </a>
+              </div>
+            )}
           </div>
         </section>
       </main>
@@ -481,7 +493,7 @@ export default function HomePage() {
           <div>
             <h4>Clients</h4>
             <ul>
-              <li><Link href="/portal">Client portal</Link></li>
+              {supabaseEnabled() && <li><Link href="/portal">Client portal</Link></li>}
               <li><a href="#contact">Book a call</a></li>
               <li><a href="#faq">FAQ</a></li>
             </ul>

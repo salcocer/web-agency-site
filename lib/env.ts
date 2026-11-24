@@ -19,3 +19,8 @@ export const env = {
 };
 
 export const stripeEnabled = () => Boolean(process.env.STRIPE_SECRET_KEY);
+
+// The portal and the contact form need Supabase. Until it's set up, the marketing site
+// hides links to the portal and asks for enquiries by email. Read at build time.
+export const supabaseEnabled = () =>
+  Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY);

@@ -12,7 +12,7 @@ const newsreader = Newsreader({
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: { default: "Saltlight Studio", template: "%s · Saltlight Studio" },
+  title: { default: "Kata Studio", template: "%s · Kata Studio" },
   description:
     "A small web design studio on Koh Samui and in Bangkok. Websites for villas, resorts, clinics and independent brands.",
 };

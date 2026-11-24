@@ -30,7 +30,7 @@ for (const plan of carePlans) {
 }
 
 const portalSettings: Stripe.BillingPortal.ConfigurationCreateParams = {
-  business_profile: { headline: "Saltlight Studio billing" },
+  business_profile: { headline: "Kata Studio billing" },
   features: {
     customer_update: { enabled: true, allowed_updates: ["email", "name", "address", "tax_id"] },
     invoice_history: { enabled: true },

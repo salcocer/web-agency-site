@@ -114,7 +114,7 @@ export default function HomePage() {
       <header className="top">
         <div className="wrap">
           <a className="brand" href="#top">
-            <i>S</i>Saltlight
+            <i>K</i>Kata
           </a>
           <nav className="menu" aria-label="Main">
             <a href="#services">Services</a>
@@ -315,7 +315,7 @@ export default function HomePage() {
         <section className="quote">
           <div className="wrap">
             <blockquote>“A good website should feel like a good host: calm, clear and quick to help.”</blockquote>
-            <cite>The Saltlight approach</cite>
+            <cite>The Kata approach</cite>
           </div>
         </section>
 
@@ -437,7 +437,7 @@ export default function HomePage() {
               <dl>
                 <div>
                   <dt>Email</dt>
-                  <dd>hello@saltlight.studio</dd>
+                  <dd>hello@kata.studio</dd>
                 </div>
                 <div>
                   <dt>Phone · WhatsApp · LINE</dt>
@@ -458,7 +458,7 @@ export default function HomePage() {
         <div className="wrap">
           <div className="about-f">
             <a className="brand" href="#top">
-              <i>S</i>Saltlight
+              <i>K</i>Kata
             </a>
             <p>Websites for villas, resorts, clinics and independent businesses in Thailand.</p>
           </div>
@@ -487,7 +487,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="legal">
-            <span>© 2026 Saltlight Studio</span>
+            <span>© 2026 Kata Studio</span>
             <span>Made on Koh Samui</span>
           </div>
         </div>

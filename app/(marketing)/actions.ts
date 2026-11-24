@@ -33,7 +33,7 @@ export async function submitEnquiry(_: EnquiryState, formData: FormData): Promis
   const { error } = await createAdminClient().from("enquiries").insert(parsed.data);
   if (error) {
     console.error("Could not save enquiry:", error);
-    return { error: "Sorry, that didn’t send. Please email hello@saltlight.studio instead.", values };
+    return { error: "Sorry, that didn’t send. Please email hello@kata.studio instead.", values };
   }
 
   const firstName = parsed.data.name.split(" ")[0];

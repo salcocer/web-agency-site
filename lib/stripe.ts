@@ -8,7 +8,7 @@ import { carePlans } from "@/lib/plans";
 let stripe: Stripe | undefined;
 
 export function getStripe() {
-  stripe ??= new Stripe(env.stripeSecretKey(), { appInfo: { name: "Saltlight client portal" } });
+  stripe ??= new Stripe(env.stripeSecretKey(), { appInfo: { name: "Kata client portal" } });
   return stripe;
 }
 

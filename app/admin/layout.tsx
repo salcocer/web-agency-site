@@ -12,8 +12,8 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
     <div className="shell">
       <aside className="side">
         <Link className="brand" href="/admin">
-          <i>S</i>
-          <span>Saltlight staff</span>
+          <i>K</i>
+          <span>Kata staff</span>
         </Link>
         <Suspense fallback={<NavSkeleton />}>
           <AdminNav />

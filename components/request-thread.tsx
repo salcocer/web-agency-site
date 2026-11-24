@@ -23,7 +23,7 @@ export async function RequestThread({ requestId }: { requestId: string }) {
             <article className={staff ? "msg msg--staff" : "msg"} key={message.id}>
               <header>
                 <strong>{message.author ? displayName(message.author) : "Former member"}</strong>
-                {staff && <span className="pill">Saltlight</span>}
+                {staff && <span className="pill">Kata</span>}
                 <time dateTime={message.created_at}>{formatDateTime(message.created_at)}</time>
               </header>
               <p>{message.body}</p>

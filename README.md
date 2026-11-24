@@ -1,4 +1,4 @@
-# Saltlight Studio website and client portal (working name)
+# Kata Studio website and client portal
 
 The marketing site for a web design studio on Koh Samui and in Bangkok, plus a client portal where clients follow their website project, send change requests and pay.
 
@@ -103,6 +103,6 @@ After changing the schema, update `lib/database.types.ts`, either by hand or wit
 
 ## Placeholders to replace
 
-- Agency name "Saltlight Studio", email, phone and addresses
+- Email address (hello@kata.studio), phone and addresses
 - Package prices on the home page (฿35,000 / ฿85,000 / ฿4,500 per month), and the care plan in `lib/plans.ts`
 - Portfolio projects (sample projects)

@@ -16,7 +16,7 @@ export default async function PendingPage() {
         <h1>Almost there.</h1>
         <p className="lede">
           You’re signed in as {viewer.email}, but this account isn’t linked to a client yet. Email
-          hello@saltlight.studio and we’ll connect it.
+          hello@kata.studio and we’ll connect it.
         </p>
       </div>
       <form action={signOut}>

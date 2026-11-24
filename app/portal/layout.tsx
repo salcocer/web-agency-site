@@ -12,8 +12,8 @@ export default function PortalLayout({ children }: LayoutProps<"/portal">) {
     <div className="shell">
       <aside className="side">
         <Link className="brand" href="/portal">
-          <i>S</i>
-          <span>Saltlight</span>
+          <i>K</i>
+          <span>Kata</span>
         </Link>
         <Suspense fallback={<NavSkeleton />}>
           <PortalNav />

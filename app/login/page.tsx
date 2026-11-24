@@ -11,7 +11,7 @@ export default function LoginPage() {
     <main className="auth">
       <div className="auth-card">
         <Link className="brand" href="/">
-          <i>S</i>Saltlight
+          <i>K</i>Kata
         </Link>
         <div className="stack" style={{ gap: 8 }}>
           <h1>Client portal</h1>

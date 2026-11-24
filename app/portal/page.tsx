@@ -103,7 +103,7 @@ export default async function PortalHome() {
           <div className="panel">
             <p className="empty">
               Your first project will appear here once we’ve set it up. Questions in the meantime? Email
-              hello@saltlight.studio.
+              hello@kata.studio.
             </p>
           </div>
         )}

@@ -15,7 +15,9 @@
     }
   ],
   "routes": [
-    { "pattern": "kata-studio.app", "custom_domain": true }
+    { "pattern": "kata-studio.app", "custom_domain": true },
+    // Redirected to kata-studio.app in next.config.ts.
+    { "pattern": "www.kata-studio.app", "custom_domain": true }
   ],
   "observability": { "enabled": true }
 }

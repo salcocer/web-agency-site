@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="214" height="78" viewBox="0 0 107 39" role="img" aria-label="Kata Studio">
+  <g fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 3v33"/>
+    <path d="M23 14 12 25l11 11" stroke="#ff6b4a"/>
+    <circle cx="42" cy="25" r="11"/>
+    <path d="M53 14v22M69 5v31M64.5 14H77"/>
+    <circle cx="93" cy="25" r="11"/>
+    <path d="M104 14v22"/>
+  </g>
+</svg>

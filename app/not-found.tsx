@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 import { supabaseEnabled } from "@/lib/env";
 import "./app.css";
 
@@ -7,7 +8,7 @@ export default function NotFound() {
     <main className="auth">
       <div className="auth-card">
         <Link className="brand" href="/">
-          <i>K</i>Kata
+          <Logo />
         </Link>
         <h1>Page not found</h1>
         <p className="muted">That page doesn’t exist, or you don’t have access to it.</p>

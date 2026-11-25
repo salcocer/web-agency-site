@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 import { supabaseEnabled } from "@/lib/env";
 import { ContactForm } from "./contact-form";
 import "./marketing.css";
@@ -115,7 +116,7 @@ export default function HomePage() {
       <header className="top">
         <div className="wrap">
           <a className="brand" href="#top">
-            <i>K</i>Kata
+            <Logo />
           </a>
           <nav className="menu" aria-label="Main">
             <a href="#services">Services</a>
@@ -470,7 +471,7 @@ export default function HomePage() {
         <div className="wrap">
           <div className="about-f">
             <a className="brand" href="#top">
-              <i>K</i>Kata
+              <Logo />
             </a>
             <p>Websites for villas, resorts, clinics and independent businesses in Thailand.</p>
           </div>

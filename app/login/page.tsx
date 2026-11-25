@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 import { LoginForm } from "./login-form";
 import { HashSession } from "./hash-session";
 import "../app.css";
@@ -11,7 +12,7 @@ export default function LoginPage() {
     <main className="auth">
       <div className="auth-card">
         <Link className="brand" href="/">
-          <i>K</i>Kata
+          <Logo />
         </Link>
         <div className="stack" style={{ gap: 8 }}>
           <h1>Client portal</h1>

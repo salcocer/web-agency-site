@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { Logo } from "@/components/logo";
 import { NavLink } from "@/components/nav-link";
 import { NavSkeleton } from "@/components/page-skeleton";
 import { SideFoot } from "@/components/side-foot";
@@ -12,8 +13,7 @@ export default function PortalLayout({ children }: LayoutProps<"/portal">) {
     <div className="shell">
       <aside className="side">
         <Link className="brand" href="/portal">
-          <i>K</i>
-          <span>Kata</span>
+          <Logo />
         </Link>
         <Suspense fallback={<NavSkeleton />}>
           <PortalNav />

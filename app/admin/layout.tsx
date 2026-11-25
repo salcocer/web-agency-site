@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { Logo } from "@/components/logo";
 import { NavLink } from "@/components/nav-link";
 import { NavSkeleton } from "@/components/page-skeleton";
 import { SideFoot } from "@/components/side-foot";
@@ -12,8 +13,8 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
     <div className="shell">
       <aside className="side">
         <Link className="brand" href="/admin">
-          <i>K</i>
-          <span>Kata staff</span>
+          <Logo />
+          <span>staff</span>
         </Link>
         <Suspense fallback={<NavSkeleton />}>
           <AdminNav />

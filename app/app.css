@@ -4,6 +4,7 @@
 
 .side { background: var(--card); border-right: 1px solid var(--line); padding: 14px 10px; position: sticky; top: 0; height: 100dvh; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
 .side > .brand { padding: 6px 8px 12px; }
+.side > .brand .logo { height: 21px; }
 .side nav { display: grid; gap: 1px; font-size: 14px; }
 .side nav b { font-size: 12px; font-weight: 600; color: var(--faint); padding: 14px 8px 4px; }
 .side nav a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; color: var(--muted); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
